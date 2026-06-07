@@ -10,9 +10,9 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-BasicDelayAudioProcessor::BasicDelayAudioProcessor()
+BasicDelayAudioProcessor::BasicDelayAudioProcessor() : apvts(*this, nullptr, "Parameters", createParameterLayout())
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
+     , AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
@@ -26,6 +26,7 @@ BasicDelayAudioProcessor::BasicDelayAudioProcessor()
 
 BasicDelayAudioProcessor::~BasicDelayAudioProcessor()
 {
+
 }
 
 //==============================================================================
@@ -95,6 +96,14 @@ void BasicDelayAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    bufferSize = 2 * (int)sampleRate;
+    
+    delayBuffer.assign(bufferSize, 0.0f);
+
+    ParamSettings tempSettings = getParamSettings(apvts);
+    resetDelay();
+    cookVariables();
+    return;
 }
 
 void BasicDelayAudioProcessor::releaseResources()
@@ -134,7 +143,16 @@ void BasicDelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+    auto numSamples = buffer.getNumSamples();
 
+    float xn;
+    float yn;
+
+    ParamSettings settings = getParamSettings(apvts);
+
+    auto leftChannel = buffer.getWritePointer(0);
+    auto rightChannel = buffer.getWritePointer(1);
+    
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -144,24 +162,32 @@ void BasicDelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    
+    for (auto sample = 0; sample < numSamples; ++sample)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        jassert(writeIndex < bufferSize);
+        jassert(readIndex < bufferSize);
 
-        // ..do something to the data...
+        xn = leftChannel[sample];
+        yn = delayBuffer[readIndex];
+        delayBuffer[writeIndex] = xn + (yn * feedback);
+
+        leftChannel[sample] = (xn * dryMix) + (yn * wetMix);
+
+        readIndex++;
+        writeIndex++; 
+        if (readIndex >= bufferSize)
+            readIndex = 0;
+        if (writeIndex >= bufferSize)
+            writeIndex = 0;
     }
+     
 }
 
 //==============================================================================
 bool BasicDelayAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return false; // (change this to false if you choose to not supply an editor)
 }
 
 juce::AudioProcessorEditor* BasicDelayAudioProcessor::createEditor()
@@ -183,9 +209,48 @@ void BasicDelayAudioProcessor::setStateInformation (const void* data, int sizeIn
     // whose contents will have been created by the getStateInformation() call.
 }
 
+void BasicDelayAudioProcessor::resetDelay ()
+{
+    std::fill(delayBuffer.begin(), delayBuffer.end(), 0);
+    writeIndex = 0;
+    readIndex = 0;
+}
+
+void BasicDelayAudioProcessor::cookVariables()
+{
+    readIndex = writeIndex - (int)delayInSamples; 
+    if (readIndex < 0)
+        readIndex += bufferSize;
+    dryMix = wetMix - 1;
+}
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new BasicDelayAudioProcessor();
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout BasicDelayAudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::wetMix, ParamNames::wetMix, ParamRanges::wetMix, ParamDefaultValues::wetMix));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::delayInSamples, ParamNames::delayInSamples, ParamRanges::delayInSamples, ParamDefaultValues::delayInSamples));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::feedback, ParamNames::feedback, ParamRanges::feedback, ParamDefaultValues::feedback));
+    return layout;
+}
+
+ParamSettings BasicDelayAudioProcessor::getParamSettings(juce::AudioProcessorValueTreeState& tree)
+{
+    ParamSettings settings;
+
+
+    wetMix = tree.getRawParameterValue(ParamIDs::wetMix)->load();
+    delayInSamples = tree.getRawParameterValue(ParamIDs::delayInSamples)->load();
+    //settings.delayInBPM = apvts.getRawParameterValue(ParamIDs::delayInBPM)->load();
+    feedback = tree.getRawParameterValue(ParamIDs::feedback)->load();
+
+    cookVariables();
+
+    return settings;
 }
