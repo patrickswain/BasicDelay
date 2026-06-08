@@ -144,7 +144,7 @@ void BasicDelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     auto numSamples = buffer.getNumSamples();
-
+    
     float xn;
     float yn;
 
@@ -235,7 +235,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout BasicDelayAudioProcessor::cr
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::wetMix, ParamNames::wetMix, ParamRanges::wetMix, ParamDefaultValues::wetMix));
-    layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::delayInSamples, ParamNames::delayInSamples, ParamRanges::delayInSamples, ParamDefaultValues::delayInSamples));
+    layout.add(std::make_unique<juce::AudioParameterInt>(ParamIDs::delayInBPM, ParamNames::delayInBPM, 
+                                1, 240, ParamDefaultValues::delayInBPM));
+    //layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::delayInSamples, ParamNames::delayInSamples, ParamRanges::delayInSamples, ParamDefaultValues::delayInSamples));
     layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::feedback, ParamNames::feedback, ParamRanges::feedback, ParamDefaultValues::feedback));
     return layout;
 }
@@ -246,8 +248,9 @@ ParamSettings BasicDelayAudioProcessor::getParamSettings(juce::AudioProcessorVal
 
 
     wetMix = tree.getRawParameterValue(ParamIDs::wetMix)->load();
-    delayInSamples = tree.getRawParameterValue(ParamIDs::delayInSamples)->load();
-    //settings.delayInBPM = apvts.getRawParameterValue(ParamIDs::delayInBPM)->load();
+    //delayInSamples = tree.getRawParameterValue(ParamIDs::delayInSamples)->load();
+    int delayInBPM = (int)apvts.getRawParameterValue(ParamIDs::delayInBPM)->load(); // Have to convert to int because getRawParam always gives float
+    delayInSamples = getSampleRate() / ((float)delayInBPM / 60);
     feedback = tree.getRawParameterValue(ParamIDs::feedback)->load();
 
     cookVariables();

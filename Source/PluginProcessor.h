@@ -21,31 +21,31 @@ struct ParamIDs
 struct ParamNames
 {
     static constexpr auto wetMix = "Wet Mix";
-    //static constexpr auto delayInBPM = "Delay (BPM)";
-    static constexpr auto delayInSamples = "Delay (Samples)";
+    static constexpr auto delayInBPM = "Delay (BPM)";
+    //static constexpr auto delayInSamples = "Delay (Samples)";
     static constexpr auto feedback = "Feedback";
 };
 
 struct ParamSettings
 {
     float wetMix = { 0.5f };
-    float delayInSamples = { 20000.0f };
-    //int delayInBPM = { 60 };
+    //float delayInSamples = { 20000.0f };
+    int delayInBPM = { 60 };
     float feedback = { 0.5f };
 };
 
 struct ParamRanges
 {
     inline static const juce::NormalisableRange<float> wetMix = { 0.0f, 1.0f };
-    inline static const juce::NormalisableRange<float> delayInSamples = { 0.0f, 44100.0f };
-    //inline static const juce::NormalisableRange<int> delayInBPM = { 0.0f, 200.0f };
+    //inline static const juce::NormalisableRange<float> delayInSamples = { 0.0f, 44100.0f };
+    inline static const juce::NormalisableRange<int> delayInBPM = { 1, 200 };
     inline static const juce::NormalisableRange<float> feedback = { -1.0f, 1.0f };
 };
 
 struct ParamDefaultValues
 {
     static constexpr float wetMix = { -20.0f };
-    static constexpr float delayInBPM = { 120.0f };
+    static constexpr int delayInBPM = { 120 };
     static constexpr float delayInSamples = { 10000.0f };
     static constexpr float feedback = { -20.0f };
 };
@@ -107,7 +107,7 @@ private:
     float feedback;
 
     std::vector<float> delayBuffer;
-    int delayInSamples;
+    float delayInSamples;
     int readIndex;
     int writeIndex;
     int bufferSize;

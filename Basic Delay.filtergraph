@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FILTERGRAPH>
-  <FILTER uid="35" x="0.5" y="0.1" useARA="0">
+  <FILTER uid="1" x="0.5" y="0.1" useARA="0">
     <PLUGIN name="Audio Input" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="246006c0"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -16,7 +16,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="36" x="0.25" y="0.1" useARA="0">
+  <FILTER uid="2" x="0.25" y="0.1" useARA="0">
     <PLUGIN name="MIDI Input" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="a9e4f9eb"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -31,7 +31,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="37" x="0.5" y="0.9" useARA="0">
+  <FILTER uid="3" x="0.5" y="0.9" useARA="0">
     <PLUGIN name="Audio Output" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="724248cb"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="2"
@@ -46,7 +46,7 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="38" x="0.25" y="0.9" useARA="0">
+  <FILTER uid="4" x="0.25" y="0.9" useARA="0">
     <PLUGIN name="MIDI Output" descriptiveName="" format="Internal" category="I/O devices"
             manufacturer="JUCE" version="1.0" file="" uniqueId="9d5bbb00"
             isInstrument="0" fileTime="0" infoUpdateTime="0" numInputs="0"
@@ -61,27 +61,10 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="39" x="0.3810020876826722" y="0.25" useARA="0" uiLastX_Normal="498"
-          uiLastY_Normal="238" uiopen_Normal="0">
-    <PLUGIN name="vstPlayer" format="VST3" category="Instrument|Synth" manufacturer="Mirax Labs"
-            version="3.0.116" file="C:\Program Files\Common Files\VST3\vstPlayer.vst3"
-            uniqueId="8fdefd46" isInstrument="1" fileTime="18df7a3be80" infoUpdateTime="19e9947be17"
-            numInputs="0" numOutputs="0" isShell="0" hasARAExtension="0"
-            uid="ee63cfc"/>
-    <STATE>704.VMjLgbq....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9PCMz3hUMczXWEjKt3hYt3hKt.kKt3hKt3BS5gEcyQjKtPjKuYTR5AkaA4hKtfjYikWTGIlKL4hK5EjKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKt3hKAYmYUMTRSgzQC4hKtXWdOMCLFElYXcUV30zUZUGMV8DZDk1R1gjPHsFMwfUcQYkVzMlUOgFUEUkQvHjSncSZOYlcCE1YMczXlQ0UZc0ZFkkdmY0SnY1PLYGRBgDLqYjTqsVLY4VTW8DZTMDS1gjPHY2cVgEM2YkV4EkLSQGLogzcHIDR3UkQhsVQFMFNHIDSn4BZiU2cVM1bUY0SnQTZKYGRBgjcEY0X4UkQYgCRRwDZtfmXzPSLXgCRBwDZyLzS1cmUXQycVoUdQ01S2fkUZIWUFgDcEYUXqASZHYzaCcUSAACSswzQWITQwHVdAIETvDkUZUGM3M1YY0FR0MyPOUmKGE1YqcTXu0zQikic4sjbEEiX5QyPt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
-    <LAYOUT>
-      <INPUTS>
-        <BUS index="0" layout="L R"/>
-      </INPUTS>
-      <OUTPUTS>
-        <BUS index="0" layout="L R"/>
-      </OUTPUTS>
-    </LAYOUT>
-  </FILTER>
-  <FILTER uid="40" x="0.3789144050104384" y="0.4542410714285715" useARA="0">
+  <FILTER uid="5" x="0.5438413361169102" y="0.4029017857142857" useARA="0">
     <PLUGIN name="Basic Delay" format="VST3" category="Fx" manufacturer="yourcompany"
             version="1.0.0" file="C:\Users\13216\Documents\Coding\Basic Delay\Basic Delay\Builds\VisualStudio2022\x64\Debug\VST3\Basic Delay.vst3\Contents\x86_64-win\Basic Delay.vst3"
-            uniqueId="f1a3d529" isInstrument="0" fileTime="19e993de6b6" infoUpdateTime="19e9947be18"
+            uniqueId="f1a3d529" isInstrument="0" fileTime="19ea89b14f8" infoUpdateTime="19ea8a3d9c8"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e9530f61"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
@@ -94,8 +77,4 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <CONNECTION srcFilter="39" srcChannel="0" dstFilter="40" dstChannel="0"/>
-  <CONNECTION srcFilter="39" srcChannel="1" dstFilter="40" dstChannel="1"/>
-  <CONNECTION srcFilter="40" srcChannel="0" dstFilter="37" dstChannel="0"/>
-  <CONNECTION srcFilter="40" srcChannel="1" dstFilter="37" dstChannel="1"/>
 </FILTERGRAPH>
