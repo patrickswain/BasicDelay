@@ -101,6 +101,7 @@ public:
     //==============================================================================
     void resetDelay();
     void cookVariables();
+    float linearInterpolation(float y1, float y2, float fraction);
 private:
     float wetMix;
     float dryMix;

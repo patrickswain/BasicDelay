@@ -165,11 +165,18 @@ void BasicDelayAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     
     for (auto sample = 0; sample < numSamples; ++sample)
     {
-        jassert(writeIndex < bufferSize);
-        jassert(readIndex < bufferSize);
+        //jassert(writeIndex < bufferSize);
+        //jassert(readIndex < bufferSize);
 
         xn = leftChannel[sample];
-        yn = delayBuffer[readIndex];
+        
+        // For Lin Interp
+        int prevReadIndex = readIndex - 1;
+        if (prevReadIndex < 0)
+            prevReadIndex = bufferSize - 1;
+        float fractionOfSample = delayInSamples - (int)delayInSamples;
+        yn = linearInterpolation(delayBuffer[prevReadIndex], delayBuffer[readIndex], fractionOfSample);
+        //yn = delayBuffer[readIndex];
         delayBuffer[writeIndex] = xn + (yn * feedback);
 
         leftChannel[sample] = (xn * dryMix) + (yn * wetMix);
@@ -223,6 +230,11 @@ void BasicDelayAudioProcessor::cookVariables()
         readIndex += bufferSize;
     dryMix = wetMix - 1;
 }
+
+float BasicDelayAudioProcessor::linearInterpolation(float y1, float y2, float fraction)
+{
+    return (fraction * y2) + ((1 - fraction) * y1);
+}
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
@@ -236,7 +248,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout BasicDelayAudioProcessor::cr
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::wetMix, ParamNames::wetMix, ParamRanges::wetMix, ParamDefaultValues::wetMix));
     layout.add(std::make_unique<juce::AudioParameterInt>(ParamIDs::delayInBPM, ParamNames::delayInBPM, 
-                                1, 240, ParamDefaultValues::delayInBPM));
+                                30, 240, ParamDefaultValues::delayInBPM));
     //layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::delayInSamples, ParamNames::delayInSamples, ParamRanges::delayInSamples, ParamDefaultValues::delayInSamples));
     layout.add(std::make_unique<juce::AudioParameterFloat>(ParamIDs::feedback, ParamNames::feedback, ParamRanges::feedback, ParamDefaultValues::feedback));
     return layout;

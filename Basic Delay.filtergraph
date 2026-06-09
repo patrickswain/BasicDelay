@@ -61,10 +61,11 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
-  <FILTER uid="5" x="0.5438413361169102" y="0.4029017857142857" useARA="0">
+  <FILTER uid="5" x="0.5260960334029228" y="0.4977678571428572" useARA="0"
+          uiLastX_Normal="376" uiLastY_Normal="380" uiopen_Normal="0">
     <PLUGIN name="Basic Delay" format="VST3" category="Fx" manufacturer="yourcompany"
             version="1.0.0" file="C:\Users\13216\Documents\Coding\Basic Delay\Basic Delay\Builds\VisualStudio2022\x64\Debug\VST3\Basic Delay.vst3\Contents\x86_64-win\Basic Delay.vst3"
-            uniqueId="f1a3d529" isInstrument="0" fileTime="19ea89b14f8" infoUpdateTime="19ea8a3d9c8"
+            uniqueId="f1a3d529" isInstrument="0" fileTime="19ea8f73651" infoUpdateTime="19ea9ce5c7a"
             numInputs="2" numOutputs="2" isShell="0" hasARAExtension="0"
             uid="e9530f61"/>
     <STATE>191.VMjLgXK....O+fWarAhckI2bo8la8HRLt.iHfTlai8FYo41Y8HRUTYTK3HxO9.BOVMEUy.Ea0cVZtMEcgQWY9vSRC8Vav8lak4Fc9XCLt3hKt3hKt3hKt3hYRUUSTEETIckVwTjQisVTTgkdEYjKAQjYPQSPWgUdMcjKAQjct3hdA4hKt3hKt3hKtnTUv.UQAslXuk0UXoWUFE0YQcEV77RRC8Vav8lak4Fc9vyKVMEUy.Ea0cVZtMEcgQWY9..</STATE>
@@ -77,4 +78,20 @@
       </OUTPUTS>
     </LAYOUT>
   </FILTER>
+  <FILTER uid="6" x="0.3580375782881002" y="0.2578125" useARA="0">
+    <PLUGIN name="Sine Wave Synth" format="Internal" category="Synth" manufacturer="JUCE"
+            version="1.0.0" file="Sine Wave Synth" uniqueId="16fd76a8" isInstrument="1"
+            fileTime="0" infoUpdateTime="0" numInputs="0" numOutputs="2"
+            isShell="0" hasARAExtension="0" uid="16fd76a8"/>
+    <STATE>0.</STATE>
+    <LAYOUT>
+      <INPUTS/>
+      <OUTPUTS>
+        <BUS index="0" layout="L R"/>
+      </OUTPUTS>
+    </LAYOUT>
+  </FILTER>
+  <CONNECTION srcFilter="2" srcChannel="4096" dstFilter="6" dstChannel="4096"/>
+  <CONNECTION srcFilter="5" srcChannel="0" dstFilter="3" dstChannel="0"/>
+  <CONNECTION srcFilter="6" srcChannel="0" dstFilter="5" dstChannel="0"/>
 </FILTERGRAPH>
